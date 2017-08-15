@@ -2547,7 +2547,7 @@ angular.module('ngCordova.plugins.file', [])
 
           try {
             var directory = path + dir;
-            $window.resolveLocalFileSystemURL(directory, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(directory, function (fileSystem) {
               if (fileSystem.isDirectory === true) {
                 q.resolve(fileSystem);
               } else {
@@ -2574,7 +2574,7 @@ angular.module('ngCordova.plugins.file', [])
 
           try {
             var directory = path + file;
-            $window.resolveLocalFileSystemURL(directory, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(directory, function (fileSystem) {
               if (fileSystem.isFile === true) {
                 q.resolve(fileSystem);
               } else {
@@ -2607,7 +2607,7 @@ angular.module('ngCordova.plugins.file', [])
           };
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, options, function (result) {
                 q.resolve(result);
               }, function (error) {
@@ -2641,7 +2641,7 @@ angular.module('ngCordova.plugins.file', [])
           };
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, options, function (result) {
                 q.resolve(result);
               }, function (error) {
@@ -2667,7 +2667,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false}, function (dirEntry) {
                 dirEntry.remove(function () {
                   q.resolve({success: true, fileRemoved: dirEntry});
@@ -2698,7 +2698,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false}, function (fileEntry) {
                 fileEntry.remove(function () {
                   q.resolve({success: true, fileRemoved: fileEntry});
@@ -2729,7 +2729,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false}, function (dirEntry) {
                 dirEntry.removeRecursively(function () {
                   q.resolve({success: true, fileRemoved: dirEntry});
@@ -2767,7 +2767,7 @@ angular.module('ngCordova.plugins.file', [])
           };
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, options, function (fileEntry) {
                 fileEntry.createWriter(function (writer) {
                   if (options.append === true) {
@@ -2816,7 +2816,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false}, function (fileEntry) {
                 fileEntry.createWriter(function (writer) {
                   writer.seek(writer.length);
@@ -2859,7 +2859,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -2900,7 +2900,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -2939,7 +2939,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -2978,7 +2978,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -3019,9 +3019,9 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false}, function (fileEntry) {
-                $window.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
                   fileEntry.moveTo(newFileEntry, newFileName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3052,9 +3052,9 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false}, function (dirEntry) {
-                $window.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
                   dirEntry.moveTo(newDirEntry, newDirName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3085,10 +3085,10 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false, exclusive: false}, function (dirEntry) {
 
-                $window.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
                   dirEntry.copyTo(newDirEntry, newDirName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3124,10 +3124,10 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false, exclusive: false}, function (fileEntry) {
 
-                $window.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
                   fileEntry.copyTo(newFileEntry, newFileName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3162,7 +3162,7 @@ angular.module('ngCordova.plugins.file', [])
 
           try {
             var directory = path + file;
-            $window.resolveLocalFileSystemURL(directory, function (fileEntry) {
+            $window.parent.resolveLocalFileSystemURL(directory, function (fileEntry) {
               fileEntry.file(function (result) {
                 q.resolve(result);
               }, function (error) {
@@ -3190,7 +3190,7 @@ angular.module('ngCordova.plugins.file', [])
          var q = $q.defer();
 
          try {
-         $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+         $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
          fileSystem.getDirectory(dirName, options, function (parent) {
          var reader = parent.createReader();
          reader.readEntries(function (entries) {
