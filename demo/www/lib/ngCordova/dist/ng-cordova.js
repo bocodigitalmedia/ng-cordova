@@ -1310,7 +1310,7 @@ angular.module('ngCordova.plugins.brightness', [])
 angular.module('ngCordova.plugins.calendar', [])
 
   .factory('$cordovaCalendar', ['$q', '$window', function ($q, $window) {
-    
+
     return {
       createCalendar: function (options) {
         var d = $q.defer(),
@@ -1924,7 +1924,7 @@ angular.module('ngCordova.plugins.contacts', [])
 angular.module('ngCordova.plugins.datePicker', [])
 
   .factory('$cordovaDatePicker', ['$window', '$q', function ($window, $q) {
-    
+
     return {
       show: function (options) {
         var q = $q.defer();
@@ -2089,7 +2089,7 @@ angular.module('ngCordova.plugins.deviceOrientation', [])
     var defaultOptions = {
       frequency: 3000 // every 3s
     };
-    
+
     return {
       getCurrentHeading: function () {
         var q = $q.defer();
@@ -2214,7 +2214,7 @@ angular.module('ngCordova.plugins.dialogs', [])
         } else {
           q.reject(message, title);
         }
-      
+
         return q.promise;
       },
 
@@ -2227,7 +2227,7 @@ angular.module('ngCordova.plugins.dialogs', [])
         } else {
           q.reject();
         }
-      
+
         return q.promise;
       },
 
@@ -2240,7 +2240,7 @@ angular.module('ngCordova.plugins.dialogs', [])
         } else {
           q.reject(message, title);
         }
-      
+
         return q.promise;
       },
 
@@ -2253,7 +2253,7 @@ angular.module('ngCordova.plugins.dialogs', [])
         } else {
           q.reject();
         }
-      
+
         return q.promise;
       },
 
@@ -2266,7 +2266,7 @@ angular.module('ngCordova.plugins.dialogs', [])
         } else {
           q.reject(value);
         }
-      
+
         return q.promise;
       }
     };
@@ -2547,7 +2547,7 @@ angular.module('ngCordova.plugins.file', [])
 
           try {
             var directory = path + dir;
-            $window.resolveLocalFileSystemURL(directory, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(directory, function (fileSystem) {
               if (fileSystem.isDirectory === true) {
                 q.resolve(fileSystem);
               } else {
@@ -2574,7 +2574,7 @@ angular.module('ngCordova.plugins.file', [])
 
           try {
             var directory = path + file;
-            $window.resolveLocalFileSystemURL(directory, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(directory, function (fileSystem) {
               if (fileSystem.isFile === true) {
                 q.resolve(fileSystem);
               } else {
@@ -2607,7 +2607,7 @@ angular.module('ngCordova.plugins.file', [])
           };
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, options, function (result) {
                 q.resolve(result);
               }, function (error) {
@@ -2641,7 +2641,7 @@ angular.module('ngCordova.plugins.file', [])
           };
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, options, function (result) {
                 q.resolve(result);
               }, function (error) {
@@ -2667,7 +2667,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false}, function (dirEntry) {
                 dirEntry.remove(function () {
                   q.resolve({success: true, fileRemoved: dirEntry});
@@ -2698,7 +2698,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false}, function (fileEntry) {
                 fileEntry.remove(function () {
                   q.resolve({success: true, fileRemoved: fileEntry});
@@ -2729,7 +2729,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false}, function (dirEntry) {
                 dirEntry.removeRecursively(function () {
                   q.resolve({success: true, fileRemoved: dirEntry});
@@ -2767,7 +2767,7 @@ angular.module('ngCordova.plugins.file', [])
           };
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, options, function (fileEntry) {
                 fileEntry.createWriter(function (writer) {
                   if (options.append === true) {
@@ -2816,7 +2816,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false}, function (fileEntry) {
                 fileEntry.createWriter(function (writer) {
                   writer.seek(writer.length);
@@ -2859,7 +2859,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -2900,7 +2900,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -2939,7 +2939,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -2978,7 +2978,7 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(file, {create: false}, function (fileEntry) {
                 fileEntry.file(function (fileData) {
                   var reader = new FileReader();
@@ -3019,9 +3019,9 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false}, function (fileEntry) {
-                $window.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
                   fileEntry.moveTo(newFileEntry, newFileName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3052,9 +3052,9 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false}, function (dirEntry) {
-                $window.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
                   dirEntry.moveTo(newDirEntry, newDirName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3085,10 +3085,10 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getDirectory(dirName, {create: false, exclusive: false}, function (dirEntry) {
 
-                $window.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newDirEntry) {
                   dirEntry.copyTo(newDirEntry, newDirName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3124,10 +3124,10 @@ angular.module('ngCordova.plugins.file', [])
           }
 
           try {
-            $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+            $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
               fileSystem.getFile(fileName, {create: false, exclusive: false}, function (fileEntry) {
 
-                $window.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
+                $window.parent.resolveLocalFileSystemURL(newPath, function (newFileEntry) {
                   fileEntry.copyTo(newFileEntry, newFileName, function (result) {
                     q.resolve(result);
                   }, function (error) {
@@ -3162,7 +3162,7 @@ angular.module('ngCordova.plugins.file', [])
 
           try {
             var directory = path + file;
-            $window.resolveLocalFileSystemURL(directory, function (fileEntry) {
+            $window.parent.resolveLocalFileSystemURL(directory, function (fileEntry) {
               fileEntry.file(function (result) {
                 q.resolve(result);
               }, function (error) {
@@ -3190,7 +3190,7 @@ angular.module('ngCordova.plugins.file', [])
          var q = $q.defer();
 
          try {
-         $window.resolveLocalFileSystemURL(path, function (fileSystem) {
+         $window.parent.resolveLocalFileSystemURL(path, function (fileSystem) {
          fileSystem.getDirectory(dirName, options, function (parent) {
          var reader = parent.createReader();
          reader.readEntries(function (entries) {
@@ -4251,7 +4251,7 @@ angular.module('ngCordova.plugins.googlePlus', [])
             q.reject(available);
           }
         });
-        
+
         return q.promise;
       }
     };
@@ -6030,9 +6030,9 @@ angular.module('ngCordova.plugins.preferences', [])
   .factory('$cordovaPreferences', ['$window', '$q', function ($window, $q) {
 
      return {
-         
+
          pluginNotEnabledMessage: 'Plugin not enabled',
-    	
+
     	/**
     	 * Decorate the promise object.
     	 * @param promise The promise object.
@@ -6048,7 +6048,7 @@ angular.module('ngCordova.plugins.preferences', [])
 	            return promise;
 	        };
     	},
-    	
+
     	/**
     	 * Store the value of the given dictionary and key.
     	 * @param key The key of the preference.
@@ -6059,15 +6059,15 @@ angular.module('ngCordova.plugins.preferences', [])
 	    store: function (key, value, dict) {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 var storeResult;
                 if(arguments.length === 3){
@@ -6075,16 +6075,16 @@ angular.module('ngCordova.plugins.preferences', [])
                 } else {
                     storeResult = $window.plugins.appPreferences.store(key, value);
                 }
-                
+
                 storeResult.then(ok, errorCallback);
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-            
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    },
-	    
+
 	    /**
 	     * Fetch the value by the given dictionary and key.
 	     * @param key The key of the preference to retrieve.
@@ -6094,15 +6094,15 @@ angular.module('ngCordova.plugins.preferences', [])
 	    fetch: function (key, dict) {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 var fetchResult;
                 if(arguments.length === 2){
@@ -6114,11 +6114,11 @@ angular.module('ngCordova.plugins.preferences', [])
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-            
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    },
-        
+
         /**
 	     * Remove the value by the given key.
 	     * @param key The key of the preference to retrieve.
@@ -6128,15 +6128,15 @@ angular.module('ngCordova.plugins.preferences', [])
 	    remove: function (key, dict) {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 var removeResult;
                 if(arguments.length === 2){
@@ -6148,11 +6148,11 @@ angular.module('ngCordova.plugins.preferences', [])
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-	    	
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    },
-        
+
         /**
 	     * Show the application preferences.
          * @returns Returns a promise.
@@ -6160,22 +6160,22 @@ angular.module('ngCordova.plugins.preferences', [])
 	    show: function () {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 $window.plugins.appPreferences.show()
                     .then(ok, errorCallback);
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-	    	
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    }

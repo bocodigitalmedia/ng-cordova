@@ -424,7 +424,7 @@ angular.module('ngCordova.plugins.backgroundGeolocation', [])
     return {
 
       init: function () {
-        $window.navigator.geolocation.getCurrentPosition(function (location) {
+        $window.parent.navigator.geolocation.getCurrentPosition(function (location) {
           return location;
         });
       },
@@ -652,7 +652,7 @@ angular.module('ngCordova.plugins.batteryStatus', [])
     };
 
     document.addEventListener('deviceready', function () {
-      if (navigator.battery) {
+      if (parent.navigator.battery) {
         $window.addEventListener('batterystatus', batteryStatus, false);
         $window.addEventListener('batterycritical', batteryCritical, false);
         $window.addEventListener('batterylow', batteryLow, false);
@@ -1310,7 +1310,7 @@ angular.module('ngCordova.plugins.brightness', [])
 angular.module('ngCordova.plugins.calendar', [])
 
   .factory('$cordovaCalendar', ['$q', '$window', function ($q, $window) {
-    
+
     return {
       createCalendar: function (options) {
         var d = $q.defer(),
@@ -1611,12 +1611,12 @@ angular.module('ngCordova.plugins.camera', [])
       getPicture: function (options) {
         var q = $q.defer();
 
-        if (!navigator.camera) {
+        if (!parent.navigator.camera) {
           q.resolve(null);
           return q.promise;
         }
 
-        navigator.camera.getPicture(function (imageData) {
+        parent.navigator.camera.getPicture(function (imageData) {
           q.resolve(imageData);
         }, function (err) {
           q.reject(err);
@@ -1628,7 +1628,7 @@ angular.module('ngCordova.plugins.camera', [])
       cleanup: function () {
         var q = $q.defer();
 
-        navigator.camera.cleanup(function () {
+        parent.navigator.camera.cleanup(function () {
           q.resolve();
         }, function (err) {
           q.reject(err);
@@ -1650,12 +1650,12 @@ angular.module('ngCordova.plugins.capture', [])
       captureAudio: function (options) {
         var q = $q.defer();
 
-        if (!navigator.device.capture) {
+        if (!parent.navigator.device.capture) {
           q.resolve(null);
           return q.promise;
         }
 
-        navigator.device.capture.captureAudio(function (audioData) {
+        parent.navigator.device.capture.captureAudio(function (audioData) {
           q.resolve(audioData);
         }, function (err) {
           q.reject(err);
@@ -1666,12 +1666,12 @@ angular.module('ngCordova.plugins.capture', [])
       captureImage: function (options) {
         var q = $q.defer();
 
-        if (!navigator.device.capture) {
+        if (!parent.navigator.device.capture) {
           q.resolve(null);
           return q.promise;
         }
 
-        navigator.device.capture.captureImage(function (imageData) {
+        parent.navigator.device.capture.captureImage(function (imageData) {
           q.resolve(imageData);
         }, function (err) {
           q.reject(err);
@@ -1682,12 +1682,12 @@ angular.module('ngCordova.plugins.capture', [])
       captureVideo: function (options) {
         var q = $q.defer();
 
-        if (!navigator.device.capture) {
+        if (!parent.navigator.device.capture) {
           q.resolve(null);
           return q.promise;
         }
 
-        navigator.device.capture.captureVideo(function (videoData) {
+        parent.navigator.device.capture.captureVideo(function (videoData) {
           q.resolve(videoData);
         }, function (err) {
           q.reject(err);
@@ -1850,7 +1850,7 @@ angular.module('ngCordova.plugins.contacts', [])
     return {
       save: function (contact) {
         var q = $q.defer();
-        var deviceContact = navigator.contacts.create(contact);
+        var deviceContact = parent.navigator.contacts.create(contact);
 
         deviceContact.save(function (result) {
           q.resolve(result);
@@ -1862,7 +1862,7 @@ angular.module('ngCordova.plugins.contacts', [])
 
       remove: function (contact) {
         var q = $q.defer();
-        var deviceContact = navigator.contacts.create(contact);
+        var deviceContact = parent.navigator.contacts.create(contact);
 
         deviceContact.remove(function (result) {
           q.resolve(result);
@@ -1873,7 +1873,7 @@ angular.module('ngCordova.plugins.contacts', [])
       },
 
       clone: function (contact) {
-        var deviceContact = navigator.contacts.create(contact);
+        var deviceContact = parent.navigator.contacts.create(contact);
         return deviceContact.clone(contact);
       },
 
@@ -1882,14 +1882,14 @@ angular.module('ngCordova.plugins.contacts', [])
         var fields = options.fields || ['id', 'displayName'];
         delete options.fields;
         if (Object.keys(options).length === 0) {
-          navigator.contacts.find(fields, function (results) {
+          parent.navigator.contacts.find(fields, function (results) {
             q.resolve(results);
           },function (err) {
             q.reject(err);
           });
         }
         else {
-          navigator.contacts.find(fields, function (results) {
+          parent.navigator.contacts.find(fields, function (results) {
             q.resolve(results);
           }, function (err) {
             q.reject(err);
@@ -1901,7 +1901,7 @@ angular.module('ngCordova.plugins.contacts', [])
       pickContact: function () {
         var q = $q.defer();
 
-        navigator.contacts.pickContact(function (contact) {
+        parent.navigator.contacts.pickContact(function (contact) {
           q.resolve(contact);
         }, function (err) {
           q.reject(err);
@@ -1924,7 +1924,7 @@ angular.module('ngCordova.plugins.contacts', [])
 angular.module('ngCordova.plugins.datePicker', [])
 
   .factory('$cordovaDatePicker', ['$window', '$q', function ($window, $q) {
-    
+
     return {
       show: function (options) {
         var q = $q.defer();
@@ -2030,13 +2030,13 @@ angular.module('ngCordova.plugins.deviceMotion', [])
       getCurrentAcceleration: function () {
         var q = $q.defer();
 
-        if (angular.isUndefined(navigator.accelerometer) ||
-        !angular.isFunction(navigator.accelerometer.getCurrentAcceleration)) {
+        if (angular.isUndefined(parent.navigator.accelerometer) ||
+        !angular.isFunction(parent.navigator.accelerometer.getCurrentAcceleration)) {
           q.reject('Device do not support watchAcceleration');
           return q.promise;
         }
 
-        navigator.accelerometer.getCurrentAcceleration(function (result) {
+        parent.navigator.accelerometer.getCurrentAcceleration(function (result) {
           q.resolve(result);
         }, function (err) {
           q.reject(err);
@@ -2048,24 +2048,24 @@ angular.module('ngCordova.plugins.deviceMotion', [])
       watchAcceleration: function (options) {
         var q = $q.defer();
 
-        if (angular.isUndefined(navigator.accelerometer) ||
-        !angular.isFunction(navigator.accelerometer.watchAcceleration)) {
+        if (angular.isUndefined(parent.navigator.accelerometer) ||
+        !angular.isFunction(parent.navigator.accelerometer.watchAcceleration)) {
           q.reject('Device do not support watchAcceleration');
           return q.promise;
         }
 
-        var watchID = navigator.accelerometer.watchAcceleration(function (result) {
+        var watchID = parent.navigator.accelerometer.watchAcceleration(function (result) {
           q.notify(result);
         }, function (err) {
           q.reject(err);
         }, options);
 
         q.promise.cancel = function () {
-          navigator.accelerometer.clearWatch(watchID);
+          parent.navigator.accelerometer.clearWatch(watchID);
         };
 
         q.promise.clearWatch = function (id) {
-          navigator.accelerometer.clearWatch(id || watchID);
+          parent.navigator.accelerometer.clearWatch(id || watchID);
         };
 
         q.promise.watchID = watchID;
@@ -2074,7 +2074,7 @@ angular.module('ngCordova.plugins.deviceMotion', [])
       },
 
       clearWatch: function (watchID) {
-        return navigator.accelerometer.clearWatch(watchID);
+        return parent.navigator.accelerometer.clearWatch(watchID);
       }
     };
   }]);
@@ -2089,17 +2089,17 @@ angular.module('ngCordova.plugins.deviceOrientation', [])
     var defaultOptions = {
       frequency: 3000 // every 3s
     };
-    
+
     return {
       getCurrentHeading: function () {
         var q = $q.defer();
 
-        if(!navigator.compass) {
+        if(!parent.navigator.compass) {
             q.reject('No compass on Device');
             return q.promise;
         }
 
-        navigator.compass.getCurrentHeading(function (result) {
+        parent.navigator.compass.getCurrentHeading(function (result) {
           q.resolve(result);
         }, function (err) {
           q.reject(err);
@@ -2111,24 +2111,24 @@ angular.module('ngCordova.plugins.deviceOrientation', [])
       watchHeading: function (options) {
         var q = $q.defer();
 
-        if(!navigator.compass) {
+        if(!parent.navigator.compass) {
             q.reject('No compass on Device');
             return q.promise;
         }
 
         var _options = angular.extend(defaultOptions, options);
-        var watchID = navigator.compass.watchHeading(function (result) {
+        var watchID = parent.navigator.compass.watchHeading(function (result) {
           q.notify(result);
         }, function (err) {
           q.reject(err);
         }, _options);
 
         q.promise.cancel = function () {
-          navigator.compass.clearWatch(watchID);
+          parent.navigator.compass.clearWatch(watchID);
         };
 
         q.promise.clearWatch = function (id) {
-          navigator.compass.clearWatch(id || watchID);
+          parent.navigator.compass.clearWatch(id || watchID);
         };
 
         q.promise.watchID = watchID;
@@ -2137,7 +2137,7 @@ angular.module('ngCordova.plugins.deviceOrientation', [])
       },
 
       clearWatch: function (watchID) {
-        return navigator.compass.clearWatch(watchID);
+        return parent.navigator.compass.clearWatch(watchID);
       }
     };
   }]);
@@ -2153,11 +2153,11 @@ angular.module('ngCordova.plugins.dialogs', [])
       alert: function (message, title, buttonName) {
         var q = $q.defer();
 
-        if (!$window.navigator.notification) {
+        if (!$window.parent.navigator.notification) {
           $window.alert(message);
           q.resolve();
         } else {
-          navigator.notification.alert(message, function () {
+          parent.navigator.notification.alert(message, function () {
             q.resolve();
           }, title, buttonName);
         }
@@ -2168,14 +2168,14 @@ angular.module('ngCordova.plugins.dialogs', [])
       confirm: function (message, title, buttonLabels) {
         var q = $q.defer();
 
-        if (!$window.navigator.notification) {
+        if (!$window.parent.navigator.notification) {
           if ($window.confirm(message)) {
             q.resolve(1);
           } else {
             q.resolve(2);
           }
         } else {
-          navigator.notification.confirm(message, function (buttonIndex) {
+          parent.navigator.notification.confirm(message, function (buttonIndex) {
             q.resolve(buttonIndex);
           }, title, buttonLabels);
         }
@@ -2186,7 +2186,7 @@ angular.module('ngCordova.plugins.dialogs', [])
       prompt: function (message, title, buttonLabels, defaultText) {
         var q = $q.defer();
 
-        if (!$window.navigator.notification) {
+        if (!$window.parent.navigator.notification) {
           var res = $window.prompt(message, defaultText);
           if (res !== null) {
             q.resolve({input1: res, buttonIndex: 1});
@@ -2194,7 +2194,7 @@ angular.module('ngCordova.plugins.dialogs', [])
             q.resolve({input1: res, buttonIndex: 2});
           }
         } else {
-          navigator.notification.prompt(message, function (result) {
+          parent.navigator.notification.prompt(message, function (result) {
             q.resolve(result);
           }, title, buttonLabels, defaultText);
         }
@@ -2202,19 +2202,19 @@ angular.module('ngCordova.plugins.dialogs', [])
       },
 
       beep: function (times) {
-        return navigator.notification.beep(times);
+        return parent.navigator.notification.beep(times);
       },
 
       activityStart: function (message, title) {
         var q = $q.defer();
 
         if (cordova.platformId === 'android') {
-          navigator.notification.activityStart(title, message);
+          parent.navigator.notification.activityStart(title, message);
           q.resolve();
         } else {
           q.reject(message, title);
         }
-      
+
         return q.promise;
       },
 
@@ -2222,12 +2222,12 @@ angular.module('ngCordova.plugins.dialogs', [])
         var q = $q.defer();
 
         if (cordova.platformId === 'android') {
-          navigator.notification.activityStop();
+          parent.navigator.notification.activityStop();
           q.resolve();
         } else {
           q.reject();
         }
-      
+
         return q.promise;
       },
 
@@ -2235,12 +2235,12 @@ angular.module('ngCordova.plugins.dialogs', [])
         var q = $q.defer();
 
         if (cordova.platformId === 'android') {
-          navigator.notification.progressStart(title, message);
+          parent.navigator.notification.progressStart(title, message);
           q.resolve();
         } else {
           q.reject(message, title);
         }
-      
+
         return q.promise;
       },
 
@@ -2248,12 +2248,12 @@ angular.module('ngCordova.plugins.dialogs', [])
         var q = $q.defer();
 
         if (cordova.platformId === 'android') {
-          navigator.notification.progressStop();
+          parent.navigator.notification.progressStop();
           q.resolve();
         } else {
           q.reject();
         }
-      
+
         return q.promise;
       },
 
@@ -2261,12 +2261,12 @@ angular.module('ngCordova.plugins.dialogs', [])
         var q = $q.defer();
 
         if (cordova.platformId === 'android') {
-          navigator.notification.progressValue(value);
+          parent.navigator.notification.progressValue(value);
           q.resolve();
         } else {
           q.reject(value);
         }
-      
+
         return q.promise;
       }
     };
@@ -3556,7 +3556,7 @@ angular.module('ngCordova.plugins.geolocation', [])
       getCurrentPosition: function (options) {
         var q = $q.defer();
 
-        navigator.geolocation.getCurrentPosition(function (result) {
+        parent.navigator.geolocation.getCurrentPosition(function (result) {
           q.resolve(result);
         }, function (err) {
           q.reject(err);
@@ -3568,18 +3568,18 @@ angular.module('ngCordova.plugins.geolocation', [])
       watchPosition: function (options) {
         var q = $q.defer();
 
-        var watchID = navigator.geolocation.watchPosition(function (result) {
+        var watchID = parent.navigator.geolocation.watchPosition(function (result) {
           q.notify(result);
         }, function (err) {
           q.reject(err);
         }, options);
 
         q.promise.cancel = function () {
-          navigator.geolocation.clearWatch(watchID);
+          parent.navigator.geolocation.clearWatch(watchID);
         };
 
         q.promise.clearWatch = function (id) {
-          navigator.geolocation.clearWatch(id || watchID);
+          parent.navigator.geolocation.clearWatch(id || watchID);
         };
 
         q.promise.watchID = watchID;
@@ -3588,7 +3588,7 @@ angular.module('ngCordova.plugins.geolocation', [])
       },
 
       clearWatch: function (watchID) {
-        return navigator.geolocation.clearWatch(watchID);
+        return parent.navigator.geolocation.clearWatch(watchID);
       }
     };
   }]);
@@ -3604,7 +3604,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getPreferredLanguage: function () {
         var q = $q.defer();
 
-        navigator.globalization.getPreferredLanguage(function (result) {
+        parent.navigator.globalization.getPreferredLanguage(function (result) {
             q.resolve(result);
           },
           function (err) {
@@ -3616,7 +3616,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getLocaleName: function () {
         var q = $q.defer();
 
-        navigator.globalization.getLocaleName(function (result) {
+        parent.navigator.globalization.getLocaleName(function (result) {
             q.resolve(result);
           },
           function (err) {
@@ -3628,7 +3628,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getFirstDayOfWeek: function () {
         var q = $q.defer();
 
-        navigator.globalization.getFirstDayOfWeek(function (result) {
+        parent.navigator.globalization.getFirstDayOfWeek(function (result) {
             q.resolve(result);
           },
           function (err) {
@@ -3641,7 +3641,7 @@ angular.module('ngCordova.plugins.globalization', [])
       dateToString: function (date, options) {
         var q = $q.defer();
 
-        navigator.globalization.dateToString(
+        parent.navigator.globalization.dateToString(
           date,
           function (result) {
             q.resolve(result);
@@ -3656,7 +3656,7 @@ angular.module('ngCordova.plugins.globalization', [])
       stringToDate: function (dateString, options) {
         var q = $q.defer();
 
-        navigator.globalization.stringToDate(
+        parent.navigator.globalization.stringToDate(
           dateString,
           function (result) {
             q.resolve(result);
@@ -3671,7 +3671,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getDatePattern: function (options) {
         var q = $q.defer();
 
-        navigator.globalization.getDatePattern(
+        parent.navigator.globalization.getDatePattern(
           function (result) {
             q.resolve(result);
           },
@@ -3685,7 +3685,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getDateNames: function (options) {
         var q = $q.defer();
 
-        navigator.globalization.getDateNames(
+        parent.navigator.globalization.getDateNames(
           function (result) {
             q.resolve(result);
           },
@@ -3700,7 +3700,7 @@ angular.module('ngCordova.plugins.globalization', [])
       isDayLightSavingsTime: function (date) {
         var q = $q.defer();
 
-        navigator.globalization.isDayLightSavingsTime(
+        parent.navigator.globalization.isDayLightSavingsTime(
           date,
           function (result) {
             q.resolve(result);
@@ -3714,7 +3714,7 @@ angular.module('ngCordova.plugins.globalization', [])
       numberToString: function (number, options) {
         var q = $q.defer();
 
-        navigator.globalization.numberToString(
+        parent.navigator.globalization.numberToString(
           number,
           function (result) {
             q.resolve(result);
@@ -3729,7 +3729,7 @@ angular.module('ngCordova.plugins.globalization', [])
       stringToNumber: function (numberString, options) {
         var q = $q.defer();
 
-        navigator.globalization.stringToNumber(
+        parent.navigator.globalization.stringToNumber(
           numberString,
           function (result) {
             q.resolve(result);
@@ -3744,7 +3744,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getNumberPattern: function (options) {
         var q = $q.defer();
 
-        navigator.globalization.getNumberPattern(
+        parent.navigator.globalization.getNumberPattern(
           function (result) {
             q.resolve(result);
           },
@@ -3758,7 +3758,7 @@ angular.module('ngCordova.plugins.globalization', [])
       getCurrencyPattern: function (currencyCode) {
         var q = $q.defer();
 
-        navigator.globalization.getCurrencyPattern(
+        parent.navigator.globalization.getCurrencyPattern(
           currencyCode,
           function (result) {
             q.resolve(result);
@@ -4251,7 +4251,7 @@ angular.module('ngCordova.plugins.googlePlus', [])
             q.reject(available);
           }
         });
-        
+
         return q.promise;
       }
     };
@@ -4940,7 +4940,7 @@ angular.module('ngCordova.plugins.launchNavigator', [])
     return {
       navigate: function (destination, start, options) {
         var q = $q.defer();
-        launchnavigator.navigate(
+        launchparent.navigator.navigate(
           destination,
           start,
           function (){
@@ -5949,7 +5949,7 @@ angular.module('ngCordova.plugins.network', [])
       * Fires offline a event
       */
     var offlineEvent = function () {
-      var networkState = navigator.connection.type;
+      var networkState = parent.navigator.connection.type;
       $timeout(function () {
         $rootScope.$broadcast('$cordovaNetwork:offline', networkState);
       });
@@ -5959,14 +5959,14 @@ angular.module('ngCordova.plugins.network', [])
       * Fires online a event
       */
     var onlineEvent = function () {
-      var networkState = navigator.connection.type;
+      var networkState = parent.navigator.connection.type;
       $timeout(function () {
         $rootScope.$broadcast('$cordovaNetwork:online', networkState);
       });
     };
 
     document.addEventListener('deviceready', function () {
-      if (navigator.connection) {
+      if (parent.navigator.connection) {
         document.addEventListener('offline', offlineEvent, false);
         document.addEventListener('online', onlineEvent, false);
       }
@@ -5974,16 +5974,16 @@ angular.module('ngCordova.plugins.network', [])
 
     return {
       getNetwork: function () {
-        return navigator.connection.type;
+        return parent.navigator.connection.type;
       },
 
       isOnline: function () {
-        var networkState = navigator.connection.type;
+        var networkState = parent.navigator.connection.type;
         return networkState !== Connection.UNKNOWN && networkState !== Connection.NONE;
       },
 
       isOffline: function () {
-        var networkState = navigator.connection.type;
+        var networkState = parent.navigator.connection.type;
         return networkState === Connection.UNKNOWN || networkState === Connection.NONE;
       },
 
@@ -6030,9 +6030,9 @@ angular.module('ngCordova.plugins.preferences', [])
   .factory('$cordovaPreferences', ['$window', '$q', function ($window, $q) {
 
      return {
-         
+
          pluginNotEnabledMessage: 'Plugin not enabled',
-    	
+
     	/**
     	 * Decorate the promise object.
     	 * @param promise The promise object.
@@ -6048,7 +6048,7 @@ angular.module('ngCordova.plugins.preferences', [])
 	            return promise;
 	        };
     	},
-    	
+
     	/**
     	 * Store the value of the given dictionary and key.
     	 * @param key The key of the preference.
@@ -6059,15 +6059,15 @@ angular.module('ngCordova.plugins.preferences', [])
 	    store: function (key, value, dict) {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 var storeResult;
                 if(arguments.length === 3){
@@ -6075,16 +6075,16 @@ angular.module('ngCordova.plugins.preferences', [])
                 } else {
                     storeResult = $window.plugins.appPreferences.store(key, value);
                 }
-                
+
                 storeResult.then(ok, errorCallback);
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-            
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    },
-	    
+
 	    /**
 	     * Fetch the value by the given dictionary and key.
 	     * @param key The key of the preference to retrieve.
@@ -6094,15 +6094,15 @@ angular.module('ngCordova.plugins.preferences', [])
 	    fetch: function (key, dict) {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 var fetchResult;
                 if(arguments.length === 2){
@@ -6114,11 +6114,11 @@ angular.module('ngCordova.plugins.preferences', [])
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-            
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    },
-        
+
         /**
 	     * Remove the value by the given key.
 	     * @param key The key of the preference to retrieve.
@@ -6128,15 +6128,15 @@ angular.module('ngCordova.plugins.preferences', [])
 	    remove: function (key, dict) {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 var removeResult;
                 if(arguments.length === 2){
@@ -6148,11 +6148,11 @@ angular.module('ngCordova.plugins.preferences', [])
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-	    	
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    },
-        
+
         /**
 	     * Show the application preferences.
          * @returns Returns a promise.
@@ -6160,22 +6160,22 @@ angular.module('ngCordova.plugins.preferences', [])
 	    show: function () {
 	    	var deferred = $q.defer();
 	    	var promise = deferred.promise;
-            
+
             function ok(value){
                 deferred.resolve(value);
             }
-            
+
             function errorCallback(error){
                 deferred.reject(new Error(error));
             }
-            
+
             if($window.plugins){
                 $window.plugins.appPreferences.show()
                     .then(ok, errorCallback);
             } else {
                 deferred.reject(new Error(this.pluginNotEnabledMessage));
             }
-	    	
+
 	    	this.decoratePromise(promise);
 	    	return promise;
 	    }
@@ -6493,12 +6493,12 @@ angular.module('ngCordova.plugins.screenshot', [])
 
       var defer = $q.defer();
 
-      if (!navigator.screenshot) {
+      if (!parent.navigator.screenshot) {
         defer.resolve(null);
         return defer.promise;
       }
 
-      navigator.screenshot.save(function (error, res) {
+      parent.navigator.screenshot.save(function (error, res) {
         if (error) {
           defer.reject(error);
         } else {
@@ -6517,12 +6517,12 @@ angular.module('ngCordova.plugins.screenshot', [])
 
       var defer = $q.defer();
 
-      if (!navigator.screenshot) {
+      if (!parent.navigator.screenshot) {
         defer.resolve(null);
         return defer.promise;
       }
 
-      navigator.screenshot.URI(function (error, res) {
+      parent.navigator.screenshot.URI(function (error, res) {
         if (error) {
           defer.reject(error);
         } else {
@@ -6834,11 +6834,11 @@ angular.module('ngCordova.plugins.splashscreen', [])
 
     return {
       hide: function () {
-        return navigator.splashscreen.hide();
+        return parent.navigator.splashscreen.hide();
       },
 
       show: function () {
-        return navigator.splashscreen.show();
+        return parent.navigator.splashscreen.show();
       }
     };
 
@@ -7223,13 +7223,13 @@ angular.module('ngCordova.plugins.vibration', [])
 
     return {
       vibrate: function (times) {
-        return navigator.notification.vibrate(times);
+        return parent.navigator.notification.vibrate(times);
       },
       vibrateWithPattern: function (pattern, repeat) {
-        return navigator.notification.vibrateWithPattern(pattern, repeat);
+        return parent.navigator.notification.vibrateWithPattern(pattern, repeat);
       },
       cancelVibration: function () {
-        return navigator.notification.cancelVibration();
+        return parent.navigator.notification.cancelVibration();
       }
     };
   }]);
